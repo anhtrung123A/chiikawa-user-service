@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   # Example protected resource
   namespace :api do
     namespace :v1 do
-      get 'profile', to: 'profiles#show'
+      resources :addresses
     end
   end
 end
