@@ -7,8 +7,8 @@ class User < ApplicationRecord
          jwt_revocation_strategy: self
   has_many :addresses
   enum :role, {
-    customer: 'customer',
-    admin: 'admin'
+    customer: "customer",
+    admin: "admin"
   }
   validates :email, :full_name, presence: true
   before_create :set_jti
@@ -16,12 +16,21 @@ class User < ApplicationRecord
 
   def jwt_payload
     {
-      'sub' => id,
-      'jti' => jti,
-      'email' => email,
-      'full_name' => full_name,
+      "sub" => id,
+      "jti" => jti,
+      "email" => email,
+      "full_name" => full_name,
       "role" => role
     }
+  end
+
+  def send_devise_notification(notification, *args)
+    # For confirmable, we’ll handle manually
+    if notification == :confirmation_instructions
+      SendConfirmationEmailJob.perform_later(id)
+    else
+      super
+    end
   end
 
   private
