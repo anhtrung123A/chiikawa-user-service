@@ -1,6 +1,16 @@
 class Api::V1::Users::ConfirmationsController < Devise::ConfirmationsController
   respond_to :json
 
+  def show
+    self.resource = resource_class.confirm_by_token(params[:confirmation_token])
+
+    if resource.errors.empty?
+      redirect_to "https://google.com?confirmed=true", allow_other_host: true
+    else
+      redirect_to "https://google.com?error=#{CGI.escape(resource.errors.full_messages.join(', '))}", allow_other_host: true
+    end
+  end
+
   private
 
   def respond_with(resource, _opts = {})

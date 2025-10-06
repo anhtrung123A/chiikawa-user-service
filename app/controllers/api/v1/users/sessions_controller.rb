@@ -4,10 +4,8 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
   private
 
   def respond_with(resource, _opts = {})
-    token = request.env["warden-jwt_auth.token"]
     render json: {
       message: "signed in successfully",
-      token: token,
       user: { id: resource.id, email: resource.email }
     }, status: :ok
   end

@@ -20,7 +20,7 @@ class Api::V1::AddressesController < ApplicationController
     address = Address.new(address_params)
     address.user = current_user
     if address.save!
-      render json: { message: 'success' }, status: :created
+      render json: { message: "success" }, status: :created
     else
       render json: { errors: address.errors.full_messages }, status: :unprocessable_entity
     end
@@ -29,7 +29,7 @@ class Api::V1::AddressesController < ApplicationController
   def destroy
     address = Address.find(params[:id]) || nil
     if address.destroy!
-      render json: { message: 'success' }, status: :ok
+      render json: { message: "success" }, status: :ok
     else
       render json: { errors: address.errors.full_messages }, status: :unprocessable_entity
     end
@@ -38,10 +38,9 @@ class Api::V1::AddressesController < ApplicationController
   def update
   end
 
-  private 
+  private
 
   def address_params
     params.require(:address).permit(:city, :location_detail, :recipient_name, :phone_number)
   end
-
 end
