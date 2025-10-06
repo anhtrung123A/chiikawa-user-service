@@ -9,6 +9,8 @@ Bundler.require(*Rails.groups)
 module UserService
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, key: "_your_app_session"
     config.load_defaults 8.0
     config.active_job.queue_adapter = :async
     # Please, add to the `ignore` list any other `lib` subdirectories that do

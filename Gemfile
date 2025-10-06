@@ -5,7 +5,6 @@ gem "rails", "~> 8.0.2", ">= 8.0.2.1"
 gem "pg"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 gem "pundit"
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]

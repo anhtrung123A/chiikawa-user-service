@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      post "/token/refresh", to: "token#refresh"
       resources :addresses
     end
   end
