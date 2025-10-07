@@ -11,7 +11,7 @@
 Devise.setup do |config|
   # Use devise-jwt
   config.jwt do |jwt|
-    jwt.secret = "3m47O+gM3Sc0lc9I5pMhfGFZMoqvbFtLoNs6Lmq9nOg="
+    jwt.secret = ENV["JWT_SECRET"]
     jwt.dispatch_requests = [
       [ "POST", %r{^/api/v1/users/sign_in$} ]
     ]

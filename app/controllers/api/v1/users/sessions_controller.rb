@@ -13,7 +13,7 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
     cookies_sign(refresh_token, remember_me)
     render json: {
       message: "signed in successfully",
-      user: { id: resource.id, email: resource.email }
+      user: { id: resource.id, email: resource.email, full_name: resource.full_name }
     }, status: :ok
   end
 

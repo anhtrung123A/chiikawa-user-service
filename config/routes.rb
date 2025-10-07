@@ -13,6 +13,8 @@ Rails.application.routes.draw do
       post "/token/refresh", to: "token#refresh"
       resources :addresses
       resources :password_recovery, only: [ :create ]
+      post "/auth/line", to: "line_auth#login_with_line"
+      patch "/auth/line", to: "line_auth#link_with_line_account"
       post "/password_recovery/verify_otp", to: "password_recovery#verify"
       patch "/password_recovery/recover", to: "password_recovery#recover_password"
     end
