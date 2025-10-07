@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       post "/token/refresh", to: "token#refresh"
       resources :addresses
+      resources :password_recovery, only: [ :create ]
+      post "/password_recovery/verify_otp", to: "password_recovery#verify"
+      patch "/password_recovery/recover", to: "password_recovery#recover_password"
     end
   end
 end
