@@ -10,14 +10,29 @@ class AddressPolicy
     true
   end
 
-  def destroy?
-    user == address.user
+  def show?
+    owner? || admin?
   end
 
   def update?
+    owner?
+  end
+
+  def destroy?
+    owner?
+  end
+
+  def set_default_address?
+    owner?
+  end
+
+  private
+
+  def owner?
     user == address.user
   end
-  def show?
-    user == address.user || user.role == "admin"
+
+  def admin?
+    user.role == "admin"
   end
 end

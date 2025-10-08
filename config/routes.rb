@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       post "/token/refresh", to: "token#refresh"
+      patch "/addresses/set_default_address", to: "addresses#set_default_address"
       resources :addresses
       resources :password_recovery, only: [ :create ]
       post "/auth/line", to: "line_auth#login_with_line"

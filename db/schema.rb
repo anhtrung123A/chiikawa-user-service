@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_07_144559) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_08_015256) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,6 +22,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_07_144559) do
     t.string "recipient_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_default_address", default: false, null: false
+    t.string "country", null: false
+    t.string "province", null: false
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
