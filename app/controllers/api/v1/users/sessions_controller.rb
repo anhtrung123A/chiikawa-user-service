@@ -9,8 +9,15 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
     remember_me = ActiveModel::Type::Boolean.new.cast(
       params.dig(:user, :remember_me)
     )
+    if resource.is_locked?
+      render json: {
+        message: "your account has been locked",
+      }, status: :ok 
+      return
+    end
     refresh_token = RefreshTokenService.create_for_user(resource, remember_me)
     cookies_sign(refresh_token, remember_me)
+    resource.update_tracked_fields!(request)
     render json: {
       message: "signed in successfully",
       user: { id: resource.id, email: resource.email, full_name: resource.full_name }

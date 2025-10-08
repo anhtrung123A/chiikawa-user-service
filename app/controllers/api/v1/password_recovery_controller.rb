@@ -85,7 +85,7 @@ class Api::V1::PasswordRecoveryController < ApplicationController
 
   def generate_recovery_session_token_for(email)
     key = "recovery_session_token:#{email}"
-    token =  SecureRandom.urlsafe_base64(64)
+    token = SecureRandom.urlsafe_base64(64)
     $redis.setex(key, 15.minutes.to_i, token)
     token
   end

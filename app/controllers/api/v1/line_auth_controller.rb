@@ -20,6 +20,13 @@ class Api::V1::LineAuthController < ApplicationController
     line_profile = get_line_profile(token_data["access_token"])
 
     user = User.find_by(line_user_id: line_profile["userId"])
+    if user.is_locked?
+      render json: {
+        message: "your account has been locked",
+      }, status: :ok 
+      return
+    end
+    user.update_tracked_fields!(request)
 
     refresh_token = RefreshTokenService.create_for_user(user, remember_me)
     cookies_sign(refresh_token, remember_me)
@@ -36,6 +43,7 @@ class Api::V1::LineAuthController < ApplicationController
     render json: { error: "Code is required" }, status: :bad_request unless code
     render json: { error: "This account has already linked to a Line account" }, status: :bad_request if current_user.line_user_id
     token_data = exchange_code_for_token(params[:code])
+    puts token_data
     line_profile = get_line_profile(token_data["access_token"])
     if current_user.update(line_user_id: line_profile["userId"])
       render json: { message: "Account has been successfully linked" }, status: :ok

@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       post "/token/refresh", to: "token#refresh"
       patch "/addresses/set_default_address", to: "addresses#set_default_address"
+      post "/users/unlock", to: "account_unlock#create"
+      get "/users/unlock", to: "account_unlock#unlock", as: "unlock"
       resources :addresses
       resources :password_recovery, only: [ :create ]
       post "/auth/line", to: "line_auth#login_with_line"

@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :validatable, :confirmable,
-         :jwt_authenticatable,
+         :jwt_authenticatable, :trackable,
          jwt_revocation_strategy: self
   has_many :addresses
   enum :role, {
@@ -31,6 +31,16 @@ class User < ApplicationRecord
     else
       super
     end
+  end
+
+  def is_locked?
+    locked_at != nil
+  end
+
+  def self.lock_inactive_account
+    puts "locked accounts which are inactive for more than 60 days"
+    threshold = 60.days.ago
+    where("last_sign_in_at >= ? AND locked_at IS NULL", threshold).update_all(locked_at: Time.current)
   end
 
   private
