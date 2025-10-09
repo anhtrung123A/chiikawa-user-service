@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       post "/token/refresh", to: "token#refresh"
       patch "/addresses/set_default_address", to: "addresses#set_default_address"
       post "/users/unlock", to: "account_unlock#create"
+      get "/users/get_profile", to: "profile#show"
       get "/users/unlock", to: "account_unlock#unlock", as: "unlock"
       get "/addresses/default_address", to: "addresses#show_default_address"
       resources :addresses

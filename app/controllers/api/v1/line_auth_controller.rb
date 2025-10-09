@@ -20,6 +20,12 @@ class Api::V1::LineAuthController < ApplicationController
     line_profile = get_line_profile(token_data["access_token"])
 
     user = User.find_by(line_user_id: line_profile["userId"])
+    if user == nil
+      render json: {
+        message: "this line account has never been linked",
+      }, status: :unauthorized 
+      return
+    end
     if user.is_locked?
       render json: {
         message: "your account has been locked",
