@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       patch "/addresses/set_default_address", to: "addresses#set_default_address"
       post "/users/unlock", to: "account_unlock#create"
       get "/users/unlock", to: "account_unlock#unlock", as: "unlock"
+      get "/addresses/default_address", to: "addresses#show_default_address"
       resources :addresses
       resources :password_recovery, only: [ :create ]
       post "/auth/line", to: "line_auth#login_with_line"

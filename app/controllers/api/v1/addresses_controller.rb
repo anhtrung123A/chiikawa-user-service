@@ -59,6 +59,15 @@ class Api::V1::AddressesController < ApplicationController
     end
   end
 
+  def show_default_address
+    address = current_user.default_address
+    if address
+      render json: { data: address.as_json }, status: :ok
+    else
+      render json: { message: "You haven't created any addresses yet." }, status: :ok
+    end
+  end
+
   private
 
   def address_params

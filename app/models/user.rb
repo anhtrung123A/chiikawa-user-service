@@ -37,6 +37,10 @@ class User < ApplicationRecord
     locked_at != nil
   end
 
+  def default_address
+    addresses.where(is_default_address: true).first || nil
+  end
+
   def self.lock_inactive_account
     puts "locked accounts which are inactive for more than 60 days"
     threshold = 60.days.ago
