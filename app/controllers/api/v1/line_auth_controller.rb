@@ -34,7 +34,7 @@ class Api::V1::LineAuthController < ApplicationController
     response.set_header("authorization", "Bearer #{token}")
     render json: {
       message: "signed in successfully",
-      user: { id: user.id, email: user.email, full_name: user.full_name }
+      user: { id: user.id, email: user.email, full_name: user.full_name, line_user_id: user.line_user_id }
     }, status: :ok
   end
 

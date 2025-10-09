@@ -40,7 +40,7 @@ class Api::V1::AddressesController < ApplicationController
   def update
     address = Address.find(params[:id]) || nil
     authorize address
-
+    current_user.addresses.update_all(is_default_address: false)
     if address.update(address_params)
       render json: { message: "success", data: address.as_json }, status: :ok
     else
@@ -62,6 +62,6 @@ class Api::V1::AddressesController < ApplicationController
   private
 
   def address_params
-    params.require(:address).permit(:city, :location_detail, :recipient_name, :phone_number, :country, :province)
+    params.require(:address).permit(:city, :location_detail, :recipient_name, :phone_number, :country, :province, :is_default_address)
   end
 end

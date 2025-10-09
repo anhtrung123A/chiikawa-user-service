@@ -7,7 +7,7 @@ class Api::V1::TokenController < ApplicationController
 
     if refresh_token
       new_jwt = RefreshTokenService.issue_access_token(refresh_token)
-      render json: { access_token: new_jwt }, status: :ok
+      render json: { token: new_jwt }, status: :ok
     else
       render json: { error: "missing refresh token" }, status: :bad_request
     end
