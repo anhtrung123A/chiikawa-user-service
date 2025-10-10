@@ -12,7 +12,6 @@ class User < ApplicationRecord
   }
   validates :email, :full_name, presence: true
   before_create :set_jti
-  after_update_commit :publish_user_update_event
 
   include Devise::JWT::RevocationStrategies::JTIMatcher
 
@@ -48,8 +47,6 @@ class User < ApplicationRecord
     threshold = 60.days.ago
     where("last_sign_in_at >= ? AND locked_at IS NULL", threshold).update_all(locked_at: Time.current)
   end
-
-  private
 
   def set_jti
     self.jti = SecureRandom.uuid if jti.blank?

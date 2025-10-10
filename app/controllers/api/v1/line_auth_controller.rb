@@ -17,7 +17,6 @@ class Api::V1::LineAuthController < ApplicationController
     if token_data["error"]
       return render json: { error: token_data["error_description"] }, status: :unauthorized
     end
-
     line_profile = get_line_profile(token_data["access_token"])
 
     user = User.find_by(line_user_id: line_profile["userId"])
@@ -48,6 +47,7 @@ class Api::V1::LineAuthController < ApplicationController
     puts token_data
     line_profile = get_line_profile(token_data["access_token"])
     if current_user.update(line_user_id: line_profile["userId"])
+      current_user.publish_user_update_event
       render json: { message: "Account has been successfully linked" }, status: :ok
     else
       render json: { error: "Failed to link account", details: user.errors.full_messages }, status: :unprocessable_entity
