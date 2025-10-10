@@ -2,7 +2,7 @@ class Api::V1::AccountUnlockController < ApplicationController
   def create
     user = User.find_by(email: params[:email])
     if user == nil 
-      render json: { message: "user not found" }, status: :ok
+      render json: { error: "user not found" }, status: :not_found
       return
     end
     if user.locked_at == nil && user.unlock_token == nil
@@ -26,11 +26,11 @@ class Api::V1::AccountUnlockController < ApplicationController
     end
     user = User.find_by(id: params[:user_id])
     if user == nil
-      render json: { message: "user not found" }, status: :ok
+      render json: { error: "user not found" }, status: :not_found
       return
     end
     if user.unlock_token != unlock_token
-      render json: { message: "unlock token invalid" }, status: :ok
+      render json: { error: "unlock token invalid" }, status: :unauthorized
       return
     end
     if user.update(locked_at: nil, unlock_token: nil)

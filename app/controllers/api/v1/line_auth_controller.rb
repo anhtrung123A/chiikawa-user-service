@@ -6,6 +6,7 @@ require "jwt"
 class Api::V1::LineAuthController < ApplicationController
   include ActionController::Cookies
   include CookiesModifier
+  include LockedUserChecker
 
   def login_with_line
     code = params[:code]
@@ -26,12 +27,7 @@ class Api::V1::LineAuthController < ApplicationController
       }, status: :unauthorized 
       return
     end
-    if user.is_locked?
-      render json: {
-        message: "your account has been locked",
-      }, status: :ok 
-      return
-    end
+    return if is_user_locked(user)
     user.update_tracked_fields!(request)
 
     refresh_token = RefreshTokenService.create_for_user(user, remember_me)

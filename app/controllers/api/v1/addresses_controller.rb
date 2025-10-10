@@ -12,7 +12,7 @@ class Api::V1::AddressesController < ApplicationController
     if address
       render json: { data: address.as_json }, status: :ok
     else
-      render json: { message: "address not found" }, status: :ok
+      render json: { error: "address not found" }, status: :ok
     end
   end
 
