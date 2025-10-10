@@ -12,6 +12,8 @@ class User < ApplicationRecord
   }
   validates :email, :full_name, presence: true
   before_create :set_jti
+  after_update_commit :publish_user_update_event
+
   include Devise::JWT::RevocationStrategies::JTIMatcher
 
   def jwt_payload
@@ -51,5 +53,9 @@ class User < ApplicationRecord
 
   def set_jti
     self.jti = SecureRandom.uuid if jti.blank?
+  end
+
+  def publish_user_update_event
+    UserPublisher.publish_user_event(self, "user_updated")
   end
 end
