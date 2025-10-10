@@ -16,7 +16,7 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
     resource.update_tracked_fields!(request)
     render json: {
       message: "signed in successfully",
-      user: { id: resource.id, email: resource.email, full_name: resource.full_name, line_user_id: resource.line_user_id }
+      user: { id: resource.id, email: resource.email, full_name: resource.full_name, line_user_id: resource.line_user_id, dob: resource.dob }
     }, status: :ok
   end
 
