@@ -15,7 +15,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_10_021532) do
   enable_extension "pg_catalog.plpgsql"
 
   create_table "addresses", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "city", null: false
     t.text "location_detail", null: false
     t.string "phone_number", null: false

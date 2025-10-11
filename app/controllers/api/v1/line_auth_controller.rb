@@ -14,6 +14,7 @@ class Api::V1::LineAuthController < ApplicationController
     return render json: { error: "Code is required" }, status: :bad_request unless code
 
     token_data = exchange_code_for_token(code)
+    puts token_data
     if token_data["error"]
       return render json: { error: token_data["error_description"] }, status: :unauthorized
     end
@@ -22,8 +23,8 @@ class Api::V1::LineAuthController < ApplicationController
     user = User.find_by(line_user_id: line_profile["userId"])
     if user == nil
       render json: {
-        message: "this line account has never been linked",
-      }, status: :unauthorized 
+        message: "this line account has never been linked"
+      }, status: :unauthorized
       return
     end
     return if is_user_locked(user)
@@ -35,7 +36,7 @@ class Api::V1::LineAuthController < ApplicationController
     response.set_header("authorization", "Bearer #{token}")
     render json: {
       message: "signed in successfully",
-      user: { id: user.id, email: user.email, full_name: user.full_name, line_user_id: user.line_user_id, dob: user.dob}
+      user: { id: user.id, email: user.email, full_name: user.full_name, line_user_id: user.line_user_id, dob: user.dob }
     }, status: :ok
   end
 

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       patch "/auth/line", to: "line_auth#link_with_line_account"
       post "/password_recovery/verify_otp", to: "password_recovery#verify"
       patch "/password_recovery/recover", to: "password_recovery#recover_password"
+      post "/line/webhook", to: "line_webhook#webhook"
     end
   end
 end
