@@ -30,7 +30,7 @@ class Api::V1::AddressesController < ApplicationController
   def destroy
     address = Address.find(params[:id]) || nil
     authorize address
-    if (address.is_default_address)
+    if address.is_default_address
       render json: { error: "You can't delete default address." }, status: :bad_request
       return
     end

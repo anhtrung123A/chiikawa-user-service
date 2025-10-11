@@ -7,6 +7,7 @@ class Api::V1::LineAuthController < ApplicationController
   include ActionController::Cookies
   include CookiesModifier
   include LockedUserChecker
+  before_action :authenticate_user!, only: [ :link_with_line_account ]
 
   def login_with_line
     code = params[:code]
@@ -14,7 +15,6 @@ class Api::V1::LineAuthController < ApplicationController
     return render json: { error: "Code is required" }, status: :bad_request unless code
 
     token_data = exchange_code_for_token(code)
-    puts token_data
     if token_data["error"]
       return render json: { error: token_data["error_description"] }, status: :unauthorized
     end

@@ -1,7 +1,7 @@
 class Api::V1::AccountUnlockController < ApplicationController
   def create
     user = User.find_by(email: params[:email])
-    if user == nil 
+    if user == nil
       render json: { error: "user not found" }, status: :not_found
       return
     end
