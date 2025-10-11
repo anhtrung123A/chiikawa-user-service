@@ -1,6 +1,5 @@
 class Api::V1::LineWebhookController < ApplicationController
   protect_from_forgery with: :null_session if respond_to?(:protect_from_forgery)
-  skip_before_action :authenticate_user_from_jwt
 
   def webhook
     body = request.body.read

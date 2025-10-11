@@ -14,7 +14,7 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   # Make code changes take effect immediately without server restart.
   config.enable_reloading = true
-
+  config.hosts << "yvette-iridescent-buena.ngrok-free.dev"
   # Do not eager load code on boot.
   config.eager_load = false
 
